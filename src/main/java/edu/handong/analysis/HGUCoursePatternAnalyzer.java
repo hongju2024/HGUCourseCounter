@@ -2,13 +2,14 @@ package edu.handong.analysis;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeMap;
 
 import edu.handong.analysis.datamodel.Course;
 import edu.handong.analysis.datamodel.Student;
-import edu.handong.analysise.utils.NotEnoughArgumentException;
-import edu.handong.analysise.utils.Utils;
+import edu.handong.analysis.utils.NotEnoughArgumentException;
+import edu.handong.analysis.utils.Utils;
 
 public class HGUCoursePatternAnalyzer {
 
@@ -55,8 +56,17 @@ public class HGUCoursePatternAnalyzer {
 	private HashMap<String,Student> loadStudentCourseRecords(ArrayList<String> lines) {
 		
 		// TODO: Implement this method
+		HashMap<String,Student> myHashmap = new HashMap<String,Student>();
 		
-		return null; // do not forget to return a proper variable.
+		for (String line : lines){
+			
+	         String id = line.split(", ")[0];
+	         Student myStudent = new Student(id);
+	         myHashmap.put(id, myStudent);
+	         
+	    }
+		      
+		return myHashmap; // do not forget to return a proper variable.
 	}
 
 	/**
@@ -75,7 +85,13 @@ public class HGUCoursePatternAnalyzer {
 	private ArrayList<String> countNumberOfCoursesTakenInEachSemester(Map<String, Student> sortedStudents) {
 		
 		// TODO: Implement this method
+		ArrayList<String> numOfCour = new ArrayList<String>();
+		Iterator<String> keySetIterator = sortedStudents.keySet().iterator();
+		while (keySetIterator.hasNext()) {
+		    String key = keySetIterator.next();
+		    numOfCour.add(key);
+		}
 		
-		return null; // do not forget to return a proper variable.
+		return numOfCour; // do not forget to return a proper variable.
 	}
 }
