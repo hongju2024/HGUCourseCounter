@@ -62,6 +62,10 @@ public class HGUCoursePatternAnalyzer {
 			
 	         String id = line.split(", ")[0];
 	         Student myStudent = new Student(id);
+	         if(myHashmap.containsKey(id)) {
+	        	 Course course = new Course(line);
+	        	 myHashmap.get(id).addCourse(course);
+	         }
 	         myHashmap.put(id, myStudent);
 	         
 	    }
@@ -86,12 +90,24 @@ public class HGUCoursePatternAnalyzer {
 		
 		// TODO: Implement this method
 		ArrayList<String> numOfCour = new ArrayList<String>();
+		
+		
+		int numOfSemester = 0;
+		
 		Iterator<String> keySetIterator = sortedStudents.keySet().iterator();
 		while (keySetIterator.hasNext()) {
+			HashMap<String, Integer> myHashmap = new HashMap<String,Integer>();
 		    String key = keySetIterator.next();
-		    numOfCour.add(key);
+		    Student studentID = sortedStudents.get(key);
+		    myHashmap = studentID.getSemesterByYearAndSemester();
+		    
+		   
 		}
 		
 		return numOfCour; // do not forget to return a proper variable.
 	}
 }
+
+
+
+

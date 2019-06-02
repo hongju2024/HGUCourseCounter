@@ -1,46 +1,56 @@
 package edu.handong.analysis.utils;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Utils {
-   public static ArrayList<String> getLines(String file, boolean removeHeader){
-      ArrayList<String> read = new ArrayList<String>();
-      
-      
-            
-      return read;   
-   }
-   
-   
-   public static void writeAFile(ArrayList<String> lines, String targetFileName) {
-	   String fileName = targetFileName;
+	static public ArrayList<String> getLines(String file,boolean removeHeader){
+		ArrayList<String> lines = new ArrayList<String>();
+		String thisLine="";
+		
 		try {
-			ObjectOutputStream outputStream = new ObjectOutputStream(
-					new FileOutputStream(fileName));
-			Scanner keyboard = new Scanner(System.in);
+			BufferedReader br = new BufferedReader(new FileReader(file));
+			while ((thisLine = br.readLine()) != null) { // while loop begins here
+				lines.add(thisLine);
+			} 
+			br.close();
+		} 
+		catch (IOException e) {
+			System.err.println("Error: " + e);
+		}
+		
+		if(removeHeader)
+			lines.remove(0);
+		
+		return lines;
+	}
+   
+   
+	public static void writeAFile(ArrayList<String> lines, String targetFileName){
+		try {
+			File file= new File(targetFileName);
+			FileOutputStream fos = new FileOutputStream(file);
+			DataOutputStream dos=new DataOutputStream(fos);
 			
-			String str;
-			for(String list : lines) {
-				str = list;
-				outputStream.writeChars(str);
+			for(String line:lines){
+				dos.write((line+"\n").getBytes());
 			}
-
-			System.out.println("Written to the file " + fileName);
-			outputStream.close();
-			
-			keyboard.close();
+			//dos.writeBytes();
+			System.out.println("written to file " + targetFileName);
+			dos.close();
+			fos.close();
 		} catch(FileNotFoundException e) {
-			System.out.println("Problem opening the file " + fileName);
+			System.out.println("Problem opening the file " + targetFileName);
 		} catch (IOException e) {
-			System.out.println("Problem with output to file " + fileName);
+			System.out.println("Problem with output to file " + targetFileName);
 		}
    }
 }
